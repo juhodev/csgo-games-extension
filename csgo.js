@@ -44,7 +44,6 @@ class GameLoader {
 			const players = [];
 			const tBody = scoreboard.children[0];
 			const trArray = tBody.children;
-			// trArray.shift();
 
 			for (const tr of trArray) {
 				const thInsideTrArray = tr.children;
@@ -115,11 +114,8 @@ class GameLoader {
 			if (this.loadCounter < this.pagesToLoad) {
 				this._loadMore(cb);
 			} else {
-				console.log('all loaded');
 				this.findGames();
 				this.findPlayers();
-				console.log(this.games);
-				console.log(this.players);
 				cb(this.combineData());
 			}
 		}, 2500);
