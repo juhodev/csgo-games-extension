@@ -126,6 +126,88 @@ class GameLoader {
 	}
 }
 
+class Statistics {
+	constructor(games, interestingPlayers) {
+		this.games = games;
+		this.interestingPlayers = interestingPlayers;
+	}
+
+	getGamesPlayed(player) {
+		return this.games.filter(
+			game => game.players.find(p => p.name === player) !== undefined,
+		);
+	}
+
+	getStats() {
+		const interestingAverages = {};
+
+		for (const player of this.interestingPlayers) {
+			const games = this.getGamesPlayed(player);
+			const playerStats = this.getPlayerStats(player, games);
+
+			const averages = this.getPlayerAverages(playerStats);
+			const moreThanXKills = this.getGamesWithMoreThanXKills(playerStats);
+
+			interestingAverages[player] = { averages, moreThanXKills };
+		}
+
+		return interestingAverages;
+	}
+
+	getPlayerStats(player, games) {
+		return games.map(game => game.players.find(p => p.name === player));
+	}
+
+	getPlayerAverages(stats) {
+		const playerTotals = {
+			kills: 0,
+			assists: 0,
+			deaths: 0,
+			mvps: 0,
+			ping: 0,
+			hsp: 0,
+			score: 0,
+		};
+
+		for (const stat of stats) {
+			Object.keys(playerTotals).forEach(key => {
+				playerTotals[key] += stat[key];
+			});
+		}
+
+		const averages = {};
+
+		Object.keys(playerTotals).forEach(totalKey => {
+			averages[totalKey] = playerTotals[totalKey] / stats.length;
+		});
+
+		return averages;
+	}
+
+	getGamesWithMoreThanXKills(stats) {
+		const moreThan = {
+			0: 0,
+			10: 0,
+			20: 0,
+			30: 0,
+			40: 0,
+		};
+
+		for (const stat of stats) {
+			Object.keys(moreThan).forEach(key => {
+				if (stat.kills > key) {
+					moreThan[key]++;
+				}
+			});
+		}
+
+		return moreThan;
+	}
+}
+
 const gameLoader = new GameLoader();
 gameLoader.init(data => {
+	const statistics = new Statistics(data, ['joo']);
+	const stats = statistics.getStats();
+	console.log('stats', stats);
 });
