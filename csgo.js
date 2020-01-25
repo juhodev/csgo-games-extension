@@ -6,8 +6,8 @@ class GameLoader {
 		this.pagesToLoad = 1;
 	}
 
-	init() {
-		this._loadMore();
+	init(cb) {
+		this._loadMore(cb);
 	}
 
 	findGames() {
@@ -88,23 +88,26 @@ class GameLoader {
 		}
 	}
 
-	_loadMore() {
+	combineData() {
+	_loadMore(cb) {
 		this.loadCounter++;
 		document.getElementById('load_more_button').click();
 
 		setTimeout(() => {
 			if (this.loadCounter < this.pagesToLoad) {
-				this._loadMore();
+				this._loadMore(cb);
 			} else {
 				console.log('all loaded');
 				this.findGames();
 				this.findPlayers();
 				console.log(this.games);
 				console.log(this.players);
+				cb(this.combineData());
 			}
 		}, 2500);
 	}
 }
 
 const gameLoader = new GameLoader();
-gameLoader.init();
+gameLoader.init(data => {
+});
