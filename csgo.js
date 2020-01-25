@@ -3,7 +3,8 @@ class GameLoader {
 		this.players = [];
 		this.games = [];
 		this.loadCounter = 0;
-		this.pagesToLoad = 1;
+		this.pagesToLoad = 500;
+		this.failCount = 0;
 	}
 
 	init(cb) {
@@ -108,7 +109,26 @@ class GameLoader {
 
 	_loadMore(cb) {
 		this.loadCounter++;
-		document.getElementById('load_more_button').click();
+
+		browser.runtime.sendMessage({
+			type: 'games-loaded',
+			gamesLoaded: this.loadCounter,
+		});
+
+		if (
+			document.getElementById('load_more_button').style.display !== 'none'
+		) {
+			document.getElementById('load_more_button').click();
+		} else {
+			this.failCount++;
+
+			if (this.failCount > 10) {
+				this.findGames();
+				this.findPlayers();
+				cb(this.combineData());
+				return;
+			}
+		}
 
 		setTimeout(() => {
 			if (this.loadCounter < this.pagesToLoad) {
@@ -209,6 +229,6 @@ class Statistics {
 		]);
 		const stats = statistics.getStats();
 		console.log('stats', stats);
-		browser.runtime.sendMessage(stats);
+		browser.runtime.sendMessage({ type: 'stats', stats });
 	});
 })();

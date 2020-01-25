@@ -7,7 +7,18 @@ document.getElementById('load-button').onclick = () => {
 };
 
 browser.runtime.onMessage.addListener(message => {
-	console.log('message', message);
+	switch (message.type) {
+		case 'stats':
+			renderStats(message.stats);
+			break;
+
+		case 'games-loaded':
+			renderGamesLoaded(message.gamesLoaded);
+			break;
+	}
+});
+
+function renderStats(message) {
 	const playerStatsDiv = createDiv('stats');
 	console.log(playerStatsDiv);
 	let currentRow = createDiv('row');
@@ -57,7 +68,13 @@ browser.runtime.onMessage.addListener(message => {
 	});
 
 	document.getElementById('container').appendChild(playerStatsDiv);
-});
+}
+
+function renderGamesLoaded(gamesLoaded) {
+	document.getElementById(
+		'games-loaded',
+	).textContent = `${gamesLoaded} pages loaded`;
+}
 
 function createDiv(name) {
 	const div = document.createElement('div');
