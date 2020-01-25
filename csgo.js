@@ -201,9 +201,14 @@ class Statistics {
 	}
 }
 
-const gameLoader = new GameLoader();
-gameLoader.init(data => {
-	const statistics = new Statistics(data, ['joo']);
-	const stats = statistics.getStats();
-	console.log('stats', stats);
-});
+(() => {
+	const gameLoader = new GameLoader();
+	gameLoader.init(data => {
+		const statistics = new Statistics(data, [
+			'joo',
+		]);
+		const stats = statistics.getStats();
+		console.log('stats', stats);
+		browser.runtime.sendMessage(stats);
+	});
+})();

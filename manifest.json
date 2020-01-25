@@ -4,10 +4,9 @@
 	"version": "1.0",
 	"description": "CSGO TEST THING YESYES",
 	"icons": {},
-	"content_scripts": [
-		{
-			"matches": ["*://steamcommunity.com/*"],
-			"js": ["csgo.js"]
-		}
-	]
+	"permissions": ["activeTab"],
+	"browser_action": {
+		"default_title": "CSGO game thing",
+		"default_popup": "popup.html"
+	}
 }
