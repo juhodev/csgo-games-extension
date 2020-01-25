@@ -89,6 +89,24 @@ class GameLoader {
 	}
 
 	combineData() {
+		if (this.games.length !== this.players.length) {
+			window.alert(`this.games.length doesn't equal this.players.length`);
+			return;
+		}
+
+		const newGameArray = [];
+		for (let i = 0; i < this.games.length; i++) {
+			const combinedData = {
+				game: this.games[i],
+				players: this.players[i],
+			};
+
+			newGameArray.push(combinedData);
+		}
+
+		return newGameArray;
+	}
+
 	_loadMore(cb) {
 		this.loadCounter++;
 		document.getElementById('load_more_button').click();
