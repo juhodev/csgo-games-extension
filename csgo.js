@@ -63,15 +63,22 @@ class GameLoader {
 				const hsp = thInsideTrArray[6].firstChild.textContent;
 				const score = thInsideTrArray[7].firstChild.textContent;
 
+				// Holy fucking shit this looks awful
 				const playerProfile = {
 					name,
-					ping,
-					kills,
-					assists,
-					deaths,
-					mvps,
-					hsp,
-					score,
+					ping: parseInt(ping),
+					kills: parseInt(kills),
+					assists: parseInt(assists),
+					deaths: parseInt(deaths),
+					mvps: mvps.includes('★')
+						? mvps.substr(mvps.length - 1, mvps.length) !== '★'
+							? parseInt(
+									mvps.substr(mvps.length - 1, mvps.length),
+							  )
+							: 0
+						: 0,
+					hsp: parseInt(hsp.replace('%', '')),
+					score: parseInt(score),
 				};
 
 				players.push(playerProfile);
