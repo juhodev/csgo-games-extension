@@ -1,0 +1,13 @@
+{
+	"manifest_version": 2,
+	"name": "Csgo test",
+	"version": "1.0",
+	"description": "CSGO TEST THING YESYES",
+	"icons": {},
+	"content_scripts": [
+		{
+			"matches": ["*://steamcommunity.com/*"],
+			"js": ["csgo.js"]
+		}
+	]
+}
