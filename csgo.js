@@ -19,13 +19,19 @@ class GameLoader {
 			const tBody = result.children[0];
 			const trArray = tBody.children;
 
-			// const map = trArray[0].childNodes[1];
-			// const date = trArray[1].childNodes[1];
-			// const waitTime = trArray[2].childNodes[1];
-			// const matchDuration = trArray[3].childNodes[1];
+			const map = trArray[0].childNodes[1].firstChild.textContent;
+			const date = trArray[1].childNodes[1].firstChild.textContent;
+			const waitTime = trArray[2].childNodes[1].firstChild.textContent;
+			const matchDuration =
+				trArray[3].childNodes[1].firstChild.textContent;
 
-			// const gameResult = { map, date, waitTime, matchDuration };
-			// this.games.push(gameResult);
+			const gameResult = { map, date, waitTime, matchDuration };
+
+			Object.keys(gameResult).forEach(key => {
+				gameResult[key] = gameResult[key].replace(/\n|\t/g, '');
+			});
+
+			this.games.push(gameResult);
 		}
 	}
 
@@ -38,7 +44,6 @@ class GameLoader {
 			const players = [];
 			const tBody = scoreboard.children[0];
 			const trArray = tBody.children;
-			firstChild;
 			// trArray.shift();
 
 			for (const tr of trArray) {
