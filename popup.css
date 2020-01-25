@@ -1,5 +1,5 @@
 body {
-	width: 256px;
+	width: 350px;
 }
 
 #container {
@@ -10,9 +10,12 @@ body {
 
 .playerDiv {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+	border-bottom: 1px solid black;
 }
 
 .row {
@@ -26,4 +29,8 @@ body {
 	flex-direction: column;
 	align-items: center;
 	margin-top: 5px;
+}
+
+.player-name {
+	font-size: 20px;
 }
