@@ -76,7 +76,7 @@ class GameLoader {
 							  )
 							: 0
 						: 0,
-					hsp: parseInt(hsp.replace('%', '')),
+					hsp: hsp.includes('%') ? parseInt(hsp.replace('%', '')) : 0,
 					score: parseInt(score),
 				};
 
